@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
@@ -10,42 +10,43 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
         setEditTodo("");
     };
 
-useEffect(() => {
-    if(editTodo){
-        setInput(editTodo.title);
-    }else{
-        setInput("");
-    }
-},[setInput,editTodo]);
+    useEffect(() => {
+        if (editTodo) {
+            setInput(editTodo.title);
+        } else {
+            setInput("");
+        }
+    }, [setInput, editTodo]);
 
-const onInputChange = (e) => {
-    setInput(e.target.value);
-}
-
-const onFormSubmit = (e) => {
-    e.preventDefault();
-    if (!editTodo) {
-        setTodos([...todos, { id: uuidv4(), title: input, completed: false }]);
-        setInput("");
-    } else {
-        updateTodo(input, editTodo.id, editTodo.completed)
+    const onInputChange = (e) => {
+        setInput(e.target.value);
     }
-}
-return (
-    <form onSubmit={onFormSubmit}>
-        <input
-            type="text"
-            placeholder="Enter a todo task..."
-            className="task-input"
-            value={input}
-            required
-            onChange={onInputChange}
-        />
-        <button className="button-add" type="submit">
-            {editTodo?"OK":"Add"}
-        </button>
-    </form>
-)
+
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+        if (!editTodo) {
+            setTodos([...todos, { id: uuidv4(), title: input, completed: false }]);
+            setInput("");
+        } else {
+            updateTodo(input, editTodo.id, editTodo.completed)
+        }
+    }
+
+    return (
+        <form onSubmit={onFormSubmit}>
+            <input
+                type="text"
+                placeholder="Enter a todo task..."
+                className="task-input"
+                value={input}
+                required
+                onChange={onInputChange}
+            />
+            <button className="button-add" type="submit">
+                {editTodo ? "OK" : "Add"}
+            </button>
+        </form>
+    )
 }
 
 export default Form;
